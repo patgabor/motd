@@ -2,8 +2,10 @@
 
 # get load averages
 IFS=" " read LOAD1 LOAD5 LOAD15 <<<$(awk '{ print $1,$2,$3 }' < /proc/loadavg)
-# get free memory
-IFS=" " read USED FREE TOTAL <<<"$(free -htm | grep 'Mem' | awk {'print $3,$4,$2'})"
+# get free memory AND swap
+# We grab the 'Mem' line and the 'Swap' line specifically
+IFS=" " read USED FREE TOTAL <<<"$(free -htm | grep 'Mem' | awk '{print $3,$4,$2}')"
+IFS=" " read SW_USED SW_FREE SW_TOTAL <<<"$(free -htm | grep 'Swap' | awk '{print $3,$4,$2}')"
 # get processes
 PROCESS=$(ps -eo user=|sort|uniq -c | awk '{ print $2 " " $1 }')
 PROCESS_ALL=$(echo "$PROCESS"| awk {'print $2'} | awk '{ SUM += $1} END { print SUM }')
@@ -18,12 +20,13 @@ G="\e[1;32m"
 
 echo -e "
 ${W}system info:
-$W  Distro......: $W`cat /etc/*release | grep "PRETTY_NAME" | cut -d "=" -f 2- | sed 's/"//g'`
-$W  Kernel......: $W`uname -sr`
+$W  Distro......: $W$(cat /etc/*release | grep "PRETTY_NAME" | cut -d "=" -f 2- | sed 's/"//g')
+$W  Kernel......: $W$(uname -sr)
 
-$W  Uptime......: $W`uptime -p`
+$W  Uptime......: $W$(uptime -p)
 $W  Load........: $G$LOAD1$W (1m), $G$LOAD5$W (5m), $G$LOAD15$W (15m)
 $W  Processes...:$W $G$PROCESS_ROOT$W (root), $G$PROCESS_USER$W (user), $G$PROCESS_ALL$W (total)
 
 $W  CPU.........: $W$PROCESSOR_NAME ($G$PROCESSOR_COUNT$W vCPU)
-$W  Memory......: $G$USED$W used, $G$FREE$W free, $G$TOTAL$W total$W"
+$W  Memory......: $G$USED$W used, $G$FREE$W free, $G$TOTAL$W total
+$W  Swap........: $G$SW_USED$W used, $G$SW_FREE$W free, $G$SW_TOTAL$W total"
