@@ -39,8 +39,8 @@ done
 # personal preferences with spinning rust HDDs.  Acceptable temperatures for
 # SATA SSDs and NVMe are higher.  Adjust these as you see fit.
 # Max Temperature (red color)
-MAX_TEMP_C=45
-MAX_TEMP_F=113
+MAX_TEMP_C=55
+MAX_TEMP_F=131
 
 # Warning Temperature, percentage of MAX_TEMP
 WARN_PERCENT=85
