@@ -60,7 +60,7 @@ undim="\e[0m"
 # hddtemp can already report F or C temperatures for SATA devices.  If this script
 # grabs a temp from smartctl and it is reported in "C" set the following to 
 # if you want that value converted to F.
-convert_c_to_f=/bin/true
+convert_c_to_f=/bin/false
 
 # logfiles to check. Leave empty to use journalctl, or specify log files to check
 # logfiles=(/var/log/syslog /var/log/syslog.1)
