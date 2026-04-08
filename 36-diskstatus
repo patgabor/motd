@@ -75,7 +75,7 @@ journalctl_days=3
 #---[ You can updates these ]--------------------------------------------------
 # Types of disks to look for. Used by awk to define disk by-id types to include
 # IDE/SATA - you might add another for usb "usb-".
-findthese="ata-|scsi-SATA_|nvme-"
+findthese="ata-|scsi-SATA_|nvme-|usb-"
 
 # This is used by awk to remove unwanted disk devices which matched above.
 ignorethese="nvme-(eui|nvme).*|nvme-.*_1[[:space:]]"
